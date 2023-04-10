@@ -8,12 +8,35 @@
 
 
 //the picked name is not repeated and is removed from the names list
-let names = [];
+let names = [
+    "Dennis",
+    "Adrian",
+    "Lennart",
+    "Durmus",
+    "Lila",
+    "Felix",
+    "Nicole",
+    "Ahmad",
+    "David",
+    "Hendri",
+    "Masoud",
+    "Leonard",
+    "Dennis",
+    "Ksenia",
+    "Shahab",
+    "Elena",
+    "Lili",
+    "Abderrazak",
+    "Nao",
+    "Olaf",
+    "Cemil"
+];
 //Example: name-1,name-2,name-3,name-4,name-5,name-6,name-7
 
 function pickWinner() {
     const inputNames = document.getElementById("names").value.split(",");
     const validNames = inputNames.filter(name => name.trim() !== '');
+    const winnerElement = document.getElementById("winner");
 
     if (validNames.length === 0 && names.length === 0) {
         alert("Please enter some names!");
@@ -36,14 +59,16 @@ function pickWinner() {
     const randomIndex = Math.floor(Math.random() * allNames.length);
     const winner = allNames[randomIndex];
     names = allNames.filter(name => name !== winner);
+    document.getElementById("names").value = names.join(",");
 
-    const winnerElement = document.getElementById("winner");
+
 
     if (names.length === 0) {
         // remove winner-picked class from #winner element
         winnerElement.classList.remove("winner-picked");
         winnerElement.innerHTML = `All names have been picked, enter new names!`;
     } else {
+
         // add winner-picked class to #winner element
         winnerElement.classList.add("winner-picked");
         winnerElement.innerHTML = `The winner is ${winner}!`;
@@ -54,9 +79,6 @@ function pickWinner() {
                 winnerElement.classList.remove("bounceIn");
             }, 1000);
         }, 10);
-
     }
-
-    document.getElementById("names").value = names.join(",");
 };
 
