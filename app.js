@@ -21,7 +21,6 @@ let names = [
     "Hendri",
     "Masoud",
     "Leonard",
-    "Dennis",
     "Ksenia",
     "Shahab",
     "Elena",
@@ -31,12 +30,13 @@ let names = [
     "Olaf",
     "Cemil"
 ];
-//Example: name-1,name-2,name-3,name-4,name-5,name-6,name-7
+
 
 function pickWinner() {
     const inputNames = document.getElementById("names").value.split(",");
     const validNames = inputNames.filter(name => name.trim() !== '');
     const winnerElement = document.getElementById("winner");
+    const winnerList = document.getElementById("winner_list");
 
     if (validNames.length === 0 && names.length === 0) {
         alert("Please enter some names!");
@@ -79,6 +79,7 @@ function pickWinner() {
                 winnerElement.classList.remove("bounceIn");
             }, 1000);
         }, 10);
+        winnerList.innerHTML = `${winner}`;
     }
 };
 

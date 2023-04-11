@@ -84,6 +84,148 @@ button:hover {
     animation: bounceIn 1s;
 }
 
+#winner_list {
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    background-color: #0a0a0a;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 80px;
+    gap: 80px;
+    overflow-x: hidden;
+}
+
+.winner_item {
+    width: max-content;
+    animation-name: move-x;
+    animation-duration: calc(0.8s * var(--step));
+    animation-delay: calc(0.3s * var(--step));
+    animation-fill-mode: forwards;
+    animation-timing-function: linear;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    color: #FA5252;
+}
+
+.winner_1 {
+    --step: 1;
+    color: #FA5252;
+}
+
+.winner_2 {
+    --step: 2;
+    color: #fa8a52;
+}
+
+.winner_3 {
+    --step: 3;
+    color: #fae152;
+}
+
+.winner_4 {
+    --step: 4;
+    color: #cdfa52;
+}
+
+.winner_5 {
+    --step: 5;
+    color: #8dfa52;
+}
+
+.winner_6 {
+    --step: 6;
+    color: #52fa58;
+}
+
+.winner_7 {
+    --step: 7;
+    color: #52fa8d;
+}
+
+.winner_8 {
+    --step: 8;
+    color: #52fad3;
+
+}
+
+.winner_9 {
+    --step: 9;
+    color: #52e1fa;
+
+}
+
+.winner_10 {
+    --step: 10;
+    color: #52b1fa;
+
+}
+
+.winner_11 {
+    --step: 11;
+    color: #526efa;
+
+}
+
+.winner_12 {
+    --step: 12;
+    color: #7452fa;
+
+}
+
+.winner_13 {
+    --step: 13;
+    color: #a352fa;
+
+}
+
+.winner_14 {
+    --step: 14;
+    color: #c852fa;
+
+}
+
+.winner_15 {
+    --step: 15;
+    color: #e652fa;
+
+}
+
+.winner_16 {
+    --step: 16;
+    color: #fa52f2;
+
+}
+
+.winner_17 {
+    --step: 17;
+    color: #fa52c8;
+
+}
+
+.winner_18 {
+    --step: 18;
+    color: #fa529b;
+
+}
+
+.winner_19 {
+    --step: 19;
+    color: #fa5274;
+
+}
+
+.winner_20 {
+    --step: 20;
+    color: #fa5252;
+
+}
+
 /* animations */
 @keyframes fadeIn {
     from {
@@ -112,5 +254,15 @@ button:hover {
 
     to {
         transform: scale(1);
+    }
+}
+
+@keyframes move-x {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(calc(-150px * var(--step)));
     }
 }
