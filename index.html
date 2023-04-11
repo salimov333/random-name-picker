@@ -4,6 +4,18 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@700&family=Noto+Sans:wght@600&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
     <title>Random Name Picker</title>
   </head>
@@ -12,30 +24,32 @@
       <h1>Random Winner Picker</h1>
       <label for="names">Enter names (separated by commas):</label>
       <input type="text" id="names" />
-      <button onclick="pickWinner()">Pick a winner!</button>
-      <div id="winner"></div>
-      <div id="winner_list">
-        <div class="winner_item winner_1">Dennis</div>
-        <div class="winner_item winner_2">Adrian</div>
-        <div class="winner_item winner_3">Lennart</div>
-        <div class="winner_item winner_4">Durmus</div>
-        <div class="winner_item winner_5">Lila</div>
-        <div class="winner_item winner_6">Felix</div>
-        <div class="winner_item winner_7">Nicole</div>
-        <div class="winner_item winner_8">Ahmad</div>
-        <div class="winner_item winner_9">David</div>
-        <div class="winner_item winner_10">Hendri</div>
-        <div class="winner_item winner_11">Masoud</div>
-        <div class="winner_item winner_12">Leonard</div>
-        <div class="winner_item winner_13">Ksenia</div>
-        <div class="winner_item winner_14">Shahab</div>
-        <div class="winner_item winner_15">Elena</div>
-        <div class="winner_item winner_16">Lili</div>
-        <div class="winner_item winner_17">Abderrazak</div>
-        <div class="winner_item winner_18">Nao</div>
-        <div class="winner_item winner_19">Olaf</div>
-        <div class="winner_item winner_20">Cemil</div>
+      <button class="btn-pick" onclick="pickWinner()">Pick a winner!</button>
+      <div id="winner">
+        <div id="winner_list">
+          <div class="winner_item winner_1">Dennis</div>
+          <div class="winner_item winner_2">Adrian</div>
+          <div class="winner_item winner_3">Lennart</div>
+          <div class="winner_item winner_4">Durmus</div>
+          <div class="winner_item winner_5">Lila</div>
+          <div class="winner_item winner_6">Felix</div>
+          <div class="winner_item winner_7">Nicole</div>
+          <div class="winner_item winner_8">Ahmad</div>
+          <div class="winner_item winner_9">David</div>
+          <div class="winner_item winner_10">Hendri</div>
+          <div class="winner_item winner_11">Masoud</div>
+          <div class="winner_item winner_12">Leonard</div>
+          <div class="winner_item winner_13">Ksenia</div>
+          <div class="winner_item winner_14">Shahab</div>
+          <div class="winner_item winner_15">Elena</div>
+          <div class="winner_item winner_16">Lili</div>
+          <div class="winner_item winner_17">Abderrazak</div>
+          <div class="winner_item winner_18">Nao</div>
+          <div class="winner_item winner_19">Olaf</div>
+          <div class="winner_item winner_20">Cemil</div>
+        </div>
       </div>
+      <h3>By Salem Helwani 2023</h3>
     </div>
     <script src="app.js"></script>
   </body>
