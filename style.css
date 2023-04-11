@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: sans-serif;
     background-color: #F9D9C7;
@@ -40,14 +44,14 @@ input[type="text"] {
     border-radius: 5px;
     background-color: #fff;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    width: 400px;
     max-width: 100%;
     color: #565656;
     text-shadow: 1px 1px #FFF2E9;
     animation: fadeIn 1s;
 }
 
-button {
+button.btn {
     font-size: min(5vw, 25px);
     padding: 10px 20px;
     border: none;
@@ -60,9 +64,15 @@ button {
     animation: fadeIn 1s;
 }
 
-button:hover {
+button.btn:hover {
     background-color: #FA5252;
     animation: shake 0.5s;
+}
+
+button.btn:disabled {
+    background-color: #565656;
+    animation: none;
+    cursor: none;
 }
 
 #winner {
@@ -84,7 +94,7 @@ button:hover {
 #winner.chosen-name {
     min-width: max-content;
     font-family: "Noto Sans", sans-serif;
-    padding: 10px;
+    padding: 20px;
 }
 
 #winner.chosen-name::before {
@@ -101,9 +111,14 @@ button:hover {
     animation: fadeIn 1.5s;
 }
 
+#winner.empty {
+    font-size: 1rem;
+    justify-content: center;
+    color: red;
+}
+
 #winner_list {
     margin-bottom: 15px;
-    animation: move-x 25s linear alternate infinite;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -113,6 +128,13 @@ button:hover {
     display: flex;
     align-items: center;
     gap: 80px;
+    animation: move-x 25s linear alternate infinite;
+}
+
+#winner_list.acceleration {
+    animation-duration: 7s;
+    animation-timing-function: ease-in-out;
+    opacity: 0.5;
 }
 
 .winner_item {

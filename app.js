@@ -50,7 +50,7 @@ function pickWinner() {
         return array.indexOf(name) === index;
     }); */
     //Way-2 using a `Set` object from the concatenation of the input names and the existing `names` array.
-    const allNames = Array.from(new Set(validNames.concat(names)));
+    let allNames = Array.from(new Set(validNames.concat(names)));
 
     if (allNames.length === 0) {
         alert("All names have been picked!");
@@ -58,22 +58,27 @@ function pickWinner() {
     }
 
     const randomIndex = Math.floor(Math.random() * allNames.length);
+    //Random number between 1000 and 3000
+    const randomTimeOut = Math.floor(Math.random() * (3000 - 1000 + 1)) + 1000;
     const winner = allNames[randomIndex];
     names = allNames.filter(name => name !== winner);
 
     if (names.length === 0) {
-        winnerElement.style.fontSize = "1rem";
-        winnerElement.innerHTML = `All names have been picked!`;
+        winnerElement.classList.add("empty");
+        winnerElement.innerHTML = "All names have been picked!";
     } else {
+        winnerList.classList.add("acceleration");
+        buttonPick.disabled = true;
         setTimeout(() => {
-            // add chosen-name class to #winner element
             winnerElement.classList.add("chosen-name")
-            winnerElement.textContent = winner
-        }, 500);
+            winnerElement.innerHTML = winner
+        }, randomTimeOut);
         setTimeout(() => {
-            winnerElement.textContent = ""
+            buttonPick.disabled = false;
+            winnerList.classList.remove("acceleration");
             winnerElement.classList.remove("chosen-name")
-            winnerElement.appendChild(winnerList)
-        }, 6000)
+            winnerElement.innerHTML = ""
+            winnerElement.appendChild(winnerList);
+        }, 6000);
     }
 };
