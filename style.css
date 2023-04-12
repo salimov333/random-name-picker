@@ -1,5 +1,7 @@
-* {
+*, ::after, ::before {
     box-sizing: border-box;
+    padding: 0;
+    margin: 0;
 }
 
 body {
@@ -77,7 +79,7 @@ button.btn:disabled {
 
 #winner {
     margin-top: 50px;
-    font-size: 2rem;
+    font-size: 25px;
     font-weight: bold;
     color: #FFF2E9;
     text-shadow: 2px 2px #565656;
@@ -88,13 +90,12 @@ button.btn:disabled {
     border-radius: 10px;
     overflow: hidden;
     background-color: #000;
-
 }
 
 #winner.chosen-name {
-    min-width: max-content;
-    font-family: "Noto Sans", sans-serif;
     padding: 20px;
+    width: fit-content;
+    font-family: "Noto Sans", sans-serif;
 }
 
 #winner.chosen-name::before {
@@ -114,7 +115,8 @@ button.btn:disabled {
 #winner.empty {
     font-size: 1rem;
     justify-content: center;
-    color: red;
+    color: rgb(250, 183, 74);
+    text-shadow: none;
 }
 
 #winner_list {
@@ -123,7 +125,6 @@ button.btn:disabled {
     border: none;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    padding: 10px 20px;
     margin-top: 20px;
     display: flex;
     align-items: center;
@@ -134,13 +135,13 @@ button.btn:disabled {
 #winner_list.acceleration {
     animation-duration: 7s;
     animation-timing-function: ease-in-out;
-    opacity: 0.5;
+    opacity: 0.8;
 }
 
 .winner_item {
-    font-size: 30px;
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: 600;
+    font-size: inherit;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 800;
     letter-spacing: 1.5px;
     color: #FA5252;
 }
