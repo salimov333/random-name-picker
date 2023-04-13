@@ -67,7 +67,7 @@ function pickName() {
         const namesList = document.querySelector(".names_list");
         namesList.classList.add("accelerate");
         buttonPick.disabled = true;
-        
+
         setTimeout(() => {
             namesContainer.classList.add("picked_name");
             namesContainer.innerHTML = pickedName;
@@ -130,10 +130,16 @@ function createNamesList(arr) {
         nameItem.innerHTML = arr[i];
         namesList.appendChild(nameItem);
     };
+    const nameItemList = document.querySelectorAll(".name_item");
+    console.log("nameItem", nameItemList);
+    for (nameItem of nameItemList) {
+        nameItem.style.color = randomHsl();
+    }
+
     const namesArrLength = namesArr.length;
-        console.log("namesArrLength:", namesArrLength);
-        namesList.setAttribute("style", `--length:${namesArrLength}`);
-        console.log("namesContainer:", namesContainer);
+    console.log("namesArrLength:", namesArrLength);
+    namesList.setAttribute("style", `--length:${namesArrLength}`);
+    console.log("namesContainer:", namesContainer);
 }
 
 //Function to generate an integer between `min` and `max` numbers.
@@ -144,4 +150,9 @@ function randomInteger(min, max) {
 //Function to show the number of available names in a given array.
 function showNumberOfNames(arr) {
     spanNumber.innerHTML = arr.length;
+};
+
+// Function to generate a random color
+function randomHsl() {
+    return 'hsla(' + (Math.random() * 360) + ', 90%, 60%, 1)';
 };
