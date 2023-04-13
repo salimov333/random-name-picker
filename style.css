@@ -5,6 +5,7 @@
 }
 
 body {
+    padding: 20px;
     font-family: sans-serif;
     background-color: #F9D9C7;
 }
@@ -58,7 +59,7 @@ button.btn {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: #FF6B6B;
+    background-color: #ff6b6b;
     color: #fff;
     cursor: pointer;
     margin-top: 20px;
@@ -67,7 +68,7 @@ button.btn {
 }
 
 button.btn:hover {
-    background-color: #FA5252;
+    filter: saturate(95%) brightness(90%);
     animation: shake 0.5s;
 }
 
@@ -77,13 +78,18 @@ button.btn:disabled {
     cursor: none;
 }
 
-#winner {
+button.btn-newRound {
+    background-color: #2f5f05;
+}
+
+#names_container {
     margin-top: 50px;
     font-size: 25px;
     font-weight: bold;
     color: #FFF2E9;
     text-shadow: 2px 2px #565656;
     width: 240px;
+    max-width: 100%;
     height: 50px;
     display: flex;
     align-items: center;
@@ -92,34 +98,34 @@ button.btn:disabled {
     background-color: #000;
 }
 
-#winner.chosen-name {
+#names_container.picked_name {
     padding: 20px;
     width: fit-content;
     font-family: "Noto Sans", sans-serif;
 }
 
-#winner.chosen-name::before {
+#names_container.picked_name::before {
     content: " 🎉 🥇";
     display: inline-block;
     margin-right: 20px;
     animation: fadeIn 1.5s;
 }
 
-#winner.chosen-name::after {
+#names_container.picked_name::after {
     content: " 🥇 🎉 ";
     display: inline-block;
     margin-left: 20px;
     animation: fadeIn 1.5s;
 }
 
-#winner.empty {
+#names_container.empty {
     font-size: 1rem;
     justify-content: center;
     color: rgb(250, 183, 74);
     text-shadow: none;
 }
 
-#winner_list {
+.names_list {
     margin-bottom: 15px;
     color: #fff;
     border: none;
@@ -128,115 +134,128 @@ button.btn:disabled {
     margin-top: 20px;
     display: flex;
     align-items: center;
-    gap: 80px;
+    gap: 40px;
     animation: move-x 25s linear alternate infinite;
 }
 
-#winner_list.acceleration {
-    animation-duration: 7s;
+.names_list.accelerate {
+    animation-duration: calc(0.3s * var(--length));
     animation-timing-function: ease-in-out;
     opacity: 0.8;
 }
 
-.winner_item {
+.name_item {
+    width: 180px;
     font-size: inherit;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 800;
     letter-spacing: 1.5px;
     color: #FA5252;
+
 }
 
-.winner_1 {
+.name_item_1 {
     color: #FA5252;
 }
 
-.winner_2 {
+.name_item_2 {
     color: #fa8a52;
 }
 
-.winner_3 {
+.name_item_3 {
     color: #fae152;
 }
 
-.winner_4 {
+.name_item_4 {
     color: #cdfa52;
 }
 
-.winner_5 {
+.name_item_5 {
     color: #8dfa52;
 }
 
-.winner_6 {
+.name_item_6 {
     color: #52fa58;
 }
 
-.winner_7 {
+.name_item_7 {
     color: #52fa8d;
 }
 
-.winner_8 {
+.name_item_8 {
     color: #52fad3;
 
 }
 
-.winner_9 {
+.name_item_9 {
     color: #52e1fa;
 
 }
 
-.winner_10 {
+.name_item_10 {
     color: #52b1fa;
 
 }
 
-.winner_11 {
+.name_item_11 {
     color: #526efa;
 
 }
 
-.winner_12 {
+.name_item_12 {
     color: #7452fa;
 
 }
 
-.winner_13 {
+.name_item_13 {
     color: #a352fa;
 
 }
 
-.winner_14 {
+.name_item_14 {
     color: #c852fa;
 
 }
 
-.winner_15 {
+.name_item_15 {
     color: #e652fa;
 
 }
 
-.winner_16 {
+.name_item_16 {
     color: #fa52f2;
 
 }
 
-.winner_17 {
+.name_item_17 {
     color: #fa52c8;
 
 }
 
-.winner_18 {
+.name_item_18 {
     color: #fa529b;
 
 }
 
-.winner_19 {
+.name_item_19 {
     color: #fa5274;
 
 }
 
-.winner_20 {
+.name_item_20 {
     color: #fa5252;
 
+}
+
+.number_names {
+    margin-top: 10px;
+    color: #575555;
+}
+.number_names .number{
+    color: #ed2121;
+    font-weight: 600;
+    font-size: 1.2em;
+    text-decoration: underline;
 }
 
 h3 {
@@ -280,10 +299,10 @@ h3 {
 
 @keyframes move-x {
     0% {
-        transform: translateX(50px);
+        transform: translateX(30px);
     }
 
     100% {
-        transform: translateX(-3620px);
+        transform: translateX(calc(-220px * var(--length)));
     }
 }
