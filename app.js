@@ -16,8 +16,8 @@ const spanNumber = document.querySelector(".number");
         console.log("`namesArrStorage` not found in local storage");
         newRound();
     }
-    //Disable new round button.
-    buttonNewRound.disabled = true;
+    //Enable new round button.
+    buttonNewRound.disabled = false;
 
     //Show number of available names in the names array.
     showNumberOfNames(namesArr)
@@ -77,6 +77,7 @@ function pickName() {
 
 //App Function to start a new picking round. It is triggered when the button `New rund` i clicked.
 function newRound() {
+    //Disable new round button.
     buttonNewRound.disabled = true;
     //Default names array
     const DefaultNamesArr = [
