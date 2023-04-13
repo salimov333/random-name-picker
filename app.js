@@ -3,6 +3,7 @@ let namesArr = [];
 const namesContainer = document.getElementById("names_container");
 const buttonPick = document.querySelector(".btn-pick");
 const buttonNewRound = document.querySelector(".btn-newRound");
+const buttonAdd = document.querySelector(".btn-add");
 const spanNumber = document.querySelector(".number");
 
 
@@ -27,47 +28,36 @@ const spanNumber = document.querySelector(".number");
 
 //Basic App Function to pick and show a name. It is triggered when the button `Pick a name` i clicked.
 function pickName() {
-    //Enable new round button.
-    buttonNewRound.disabled = false;
 
-    //Get input names.
-    const inputNames = document.getElementById("names").value.split(",");
-    const validNames = inputNames.filter(name => name.trim() !== '');
+    addNames();
 
-    //Alert no input names and empty names array!
-    if (validNames.length === 0 && namesArr.length === 0) {
-        alert("Please enter some names!");
-        return;
-    };
-
-    //remove repeated names and set all names.
-    let allNames = Array.from(new Set(validNames.concat(namesArr)));
-
-    //Generate a random integer between 0 and the index of last name in the `allNames` array
-    const randomIndex = randomInteger(0, allNames.length - 1);
+    //Generate a random integer between 0 and the index of last name in the names array
+    const randomIndex = randomInteger(0, namesArr.length - 1);
 
     //Generate a random integer between 1000 and 3000
     const randomTimeOut = randomInteger(1000, 3000);
 
 
-    //Pick a random name from `allNames` array.
-    const pickedName = allNames[randomIndex];
+    //Pick a random name from names array.
+    const pickedName = namesArr[randomIndex];
     console.log(randomIndex, pickedName);
 
+
     //Update the `namesArr` array.
-    namesArr = allNames.filter(name => name !== pickedName);
+    namesArr = namesArr.filter(name => name !== pickedName);
     console.log("namesArr:", namesArr);
 
+
     if (namesArr.length === 0) {
+        showNumberOfNames(namesArr);
         namesContainer.classList.add("empty");
         namesContainer.innerHTML = "All names have been picked!";
-
     } else {
         createNamesList(namesArr);
         const namesList = document.querySelector(".names_list");
         namesList.classList.add("accelerate");
         buttonPick.disabled = true;
-
+        buttonAdd.disabled = true;
         setTimeout(() => {
             namesContainer.classList.add("picked_name");
             namesContainer.innerHTML = pickedName;
@@ -75,9 +65,9 @@ function pickName() {
         }, randomTimeOut);
         setTimeout(() => {
             buttonPick.disabled = false;
+            buttonAdd.disabled = false;
             namesList.classList.remove("accelerate");
-            namesContainer.classList.remove("picked_name")
-            namesContainer.innerHTML = "";
+            namesContainer.classList.remove("picked_name");
             createNamesList(namesArr);
             console.log("namesArr:", namesArr);
             console.log("namesContainer;", namesContainer);
@@ -87,6 +77,7 @@ function pickName() {
 
 //App Function to start a new picking round. It is triggered when the button `New rund` i clicked.
 function newRound() {
+    buttonNewRound.disabled = true;
     //Default names array
     const DefaultNamesArr = [
         "Dennis",
@@ -110,12 +101,41 @@ function newRound() {
         "Olaf",
         "Cemil"
     ];
-    // Save the Default names Array to localStorage.
+    // Save the Default names array into localStorage.
     localStorage.setItem("namesArrStorage", JSON.stringify(DefaultNamesArr));
     namesArr = JSON.parse(localStorage.getItem("namesArrStorage"));
     showNumberOfNames(namesArr);
-    console.log(namesArr);
+    console.log("namesArr", namesArr);
 };
+
+//App Function to add new names based on input names. It is triggered when the button `Add names` i clicked.
+function addNames() {
+    //Enable new round button.
+    buttonNewRound.disabled = false;
+
+    console.log("Added names");
+
+    //Get input names.
+    const inputNames = document.getElementById("names").value.split(",");
+    document.getElementById("names").value = "";
+    const validNames = inputNames.filter(name => name.trim() !== '');
+
+    //Alert no input names and empty names array!
+    if (validNames.length === 0 && namesArr.length === 0) {
+        alert("Please enter some names!");
+        return;
+    };
+
+    //remove repeated names and update names array.
+    namesArr = Array.from(new Set(validNames.concat(namesArr)));
+
+    // Save the names array into localStorage.
+    localStorage.setItem("namesArrStorage", JSON.stringify(namesArr));
+
+    showNumberOfNames(namesArr);
+    //Create and fill the names list based on the names array.
+    createNamesList(namesArr);
+}
 
 //Auxiliary Functions.
 
@@ -123,6 +143,7 @@ function newRound() {
 function createNamesList(arr) {
     let namesList = document.createElement("div");
     namesList.classList.add("names_list");
+    namesContainer.innerHTML = "";
     namesContainer.appendChild(namesList)
     for (let i = 0; i < arr.length; i++) {
         const nameItem = document.createElement("div");

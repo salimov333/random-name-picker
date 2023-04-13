@@ -82,6 +82,10 @@ button.btn-newRound {
     background-color: #2f5f05;
 }
 
+button.btn-add {
+    background-color: #051c5f;
+}
+
 #names_container {
     margin-top: 50px;
     font-size: 25px;
