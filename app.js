@@ -1,5 +1,6 @@
 //Declaration and Selection.
 let namesArr = [];
+const inputNamesEl = document.getElementById("names");
 const namesContainer = document.getElementById("names_container");
 const buttonPick = document.querySelector(".btn-pick");
 const buttonNewRound = document.querySelector(".btn-newRound");
@@ -19,6 +20,17 @@ const spanNameWord = document.querySelector(".name_word");
     }
     //Enable new round button.
     buttonNewRound.disabled = false;
+
+    //If no names are added, disable the Add names button.
+    buttonAdd.disabled = true;
+
+    inputNamesEl.addEventListener("input", () => {
+        if (inputNamesEl.value.length === 0) {
+            buttonAdd.disabled = true;
+        } else {
+            buttonAdd.disabled = false;
+        }
+    });
 
     //Create and fill the names list based on the names array.
     createNamesList(namesArr);
@@ -44,7 +56,7 @@ function pickName() {
 
     //Update the `namesArr` array.
     namesArr = namesArr.filter(name => name !== pickedName);
-    // console.log("namesArr:", namesArr);
+    console.log("namesArr:", namesArr);
 
     spanNameWord.innerHTML = namesArr.length < 2 ? "name" : "names";
 
@@ -81,7 +93,7 @@ function newRound() {
     buttonNewRound.disabled = true;
 
     namesContainer.classList.remove("empty");
-    
+
     //Default names array
     const DefaultNamesArr = [
         "Dennis",
@@ -120,17 +132,18 @@ function addNames() {
     namesContainer.classList.remove("empty");
 
     //Get input names and remove the spaces .
-    const inputNames = document.getElementById("names").value.split(",");
-    document.getElementById("names").value = "";
+    const inputNames = inputNamesEl.value.split(",");
+    inputNamesEl.value = "";
     const validNames = inputNames.filter(name => name.trim() !== '');
     console.log("Added names:", validNames);
 
     //Alert no input names and empty names array!
     if (validNames.length === 0 && namesArr.length === 0) {
+        namesContainer.classList.add("empty");
         alert("Please enter some names or start a new round!");
         return;
     };
-
+    
     //remove repeated names and update names array.
     namesArr = Array.from(new Set(validNames.concat(namesArr)));
 

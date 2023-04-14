@@ -42,7 +42,9 @@ label {
 
 input[type="text"] {
     font-size: min(5vw, 20px);
-    padding: 10px;
+    padding: 12px;
+    min-height: 50px;
+    outline: none;
     border: none;
     border-radius: 5px;
     background-color: #fff;
@@ -52,6 +54,10 @@ input[type="text"] {
     color: #565656;
     text-shadow: 1px 1px #FFF2E9;
     animation: fadeIn 1s;
+}
+
+input[type="text"]:focus {
+    border: 1px solid #e7e781;
 }
 
 button.btn {
@@ -150,7 +156,8 @@ button.btn-add {
 }
 
 .name_item {
-    width: 170px;
+    width: 180px;
+    min-width: max-content;
     font-size: inherit;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 900;
