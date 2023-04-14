@@ -139,7 +139,8 @@ button.btn-add {
     display: flex;
     align-items: center;
     gap: 40px;
-    animation: move-x 25s linear alternate infinite;
+    animation: move-x linear alternate infinite;
+    animation-duration: calc(1s * var(--length));
 }
 
 .names_list.accelerate {
@@ -149,20 +150,20 @@ button.btn-add {
 }
 
 .name_item {
-    width: 180px;
+    width: 170px;
     font-size: inherit;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-weight: 800;
+    font-weight: 900;
     letter-spacing: 1.5px;
     color: #FA5252;
-
 }
 
 .number_names {
     margin-top: 10px;
     color: #575555;
 }
-.number_names .number{
+
+.number_names .number {
     color: #ed2121;
     font-weight: 600;
     font-size: 1.2em;
@@ -210,7 +211,7 @@ h3 {
 
 @keyframes move-x {
     0% {
-        transform: translateX(30px);
+        transform: translateX(80px);
     }
 
     100% {

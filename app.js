@@ -5,6 +5,7 @@ const buttonPick = document.querySelector(".btn-pick");
 const buttonNewRound = document.querySelector(".btn-newRound");
 const buttonAdd = document.querySelector(".btn-add");
 const spanNumber = document.querySelector(".number");
+const spanNameWord = document.querySelector(".name_word");
 
 
 //Immediately invoked function checks first of all if the `names Array` is in local storage already.
@@ -19,11 +20,9 @@ const spanNumber = document.querySelector(".number");
     //Enable new round button.
     buttonNewRound.disabled = false;
 
-    //Show number of available names in the names array.
-    showNumberOfNames(namesArr)
-
     //Create and fill the names list based on the names array.
     createNamesList(namesArr);
+
 })();
 
 //Basic App Function to pick and show a name. It is triggered when the button `Pick a name` i clicked.
@@ -45,11 +44,12 @@ function pickName() {
 
     //Update the `namesArr` array.
     namesArr = namesArr.filter(name => name !== pickedName);
-    console.log("namesArr:", namesArr);
+    // console.log("namesArr:", namesArr);
 
+    spanNameWord.innerHTML = namesArr.length < 2 ? "name" : "names";
 
     if (namesArr.length === 0) {
-        showNumberOfNames(namesArr);
+        createNamesList(namesArr);
         namesContainer.classList.add("empty");
         namesContainer.innerHTML = "All names have been picked!";
     } else {
@@ -61,7 +61,7 @@ function pickName() {
         setTimeout(() => {
             namesContainer.classList.add("picked_name");
             namesContainer.innerHTML = pickedName;
-            showNumberOfNames(namesArr);
+            // showNumberOfNames(namesArr);
         }, randomTimeOut);
         setTimeout(() => {
             buttonPick.disabled = false;
@@ -69,8 +69,8 @@ function pickName() {
             namesList.classList.remove("accelerate");
             namesContainer.classList.remove("picked_name");
             createNamesList(namesArr);
-            console.log("namesArr:", namesArr);
-            console.log("namesContainer;", namesContainer);
+            // console.log("namesArr:", namesArr);
+            // console.log("namesContainer;", namesContainer);
         }, 6000);
     };
 };
@@ -79,6 +79,9 @@ function pickName() {
 function newRound() {
     //Disable new round button.
     buttonNewRound.disabled = true;
+
+    namesContainer.classList.remove("empty");
+    
     //Default names array
     const DefaultNamesArr = [
         "Dennis",
@@ -105,7 +108,7 @@ function newRound() {
     // Save the Default names array into localStorage.
     localStorage.setItem("namesArrStorage", JSON.stringify(DefaultNamesArr));
     namesArr = JSON.parse(localStorage.getItem("namesArrStorage"));
-    showNumberOfNames(namesArr);
+    createNamesList(namesArr);
     console.log("namesArr", namesArr);
 };
 
@@ -114,16 +117,17 @@ function addNames() {
     //Enable new round button.
     buttonNewRound.disabled = false;
 
-    console.log("Added names");
+    namesContainer.classList.remove("empty");
 
-    //Get input names.
+    //Get input names and remove the spaces .
     const inputNames = document.getElementById("names").value.split(",");
     document.getElementById("names").value = "";
     const validNames = inputNames.filter(name => name.trim() !== '');
+    console.log("Added names:", validNames);
 
     //Alert no input names and empty names array!
     if (validNames.length === 0 && namesArr.length === 0) {
-        alert("Please enter some names!");
+        alert("Please enter some names or start a new round!");
         return;
     };
 
@@ -133,8 +137,6 @@ function addNames() {
     // Save the names array into localStorage.
     localStorage.setItem("namesArrStorage", JSON.stringify(namesArr));
 
-    showNumberOfNames(namesArr);
-    //Create and fill the names list based on the names array.
     createNamesList(namesArr);
 }
 
@@ -143,25 +145,32 @@ function addNames() {
 //Function to create and fill the names list based on a given names array.
 function createNamesList(arr) {
     let namesList = document.createElement("div");
-    namesList.classList.add("names_list");
     namesContainer.innerHTML = "";
-    namesContainer.appendChild(namesList)
+    namesContainer.appendChild(namesList);
+    namesList.classList.add("names_list");
     for (let i = 0; i < arr.length; i++) {
         const nameItem = document.createElement("div");
-        nameItem.classList.add("name_item", `name_item_${i + 1}`);
+        nameItem.classList.add("name_item");
         nameItem.innerHTML = arr[i];
         namesList.appendChild(nameItem);
     };
     const nameItemList = document.querySelectorAll(".name_item");
-    console.log("nameItem", nameItemList);
+    // console.log("nameItem", nameItemList);
     for (nameItem of nameItemList) {
         nameItem.style.color = randomHsl();
-    }
+    };
 
     const namesArrLength = namesArr.length;
     console.log("namesArrLength:", namesArrLength);
     namesList.setAttribute("style", `--length:${namesArrLength}`);
-    console.log("namesContainer:", namesContainer);
+    // console.log("namesContainer:", namesContainer);
+
+    //Show number of available names in the names array.
+    showNumberOfNames(namesArr);
+
+    // Save the names array into localStorage.
+    localStorage.setItem("namesArrStorage", JSON.stringify(namesArr));
+    // console.log(localStorage.getItem("namesArrStorage"));
 }
 
 //Function to generate an integer between `min` and `max` numbers.
