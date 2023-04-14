@@ -21,16 +21,24 @@
   </head>
   <body>
     <div class="wrapper">
-      <h1>Random Name Picker v.1.5.9</h1>
+      <h1>Random Name Picker v.1.6.0</h1>
       <label for="names">Enter names separated by commas</label>
-      <input type="text" id="names" placeholder="John, Marie, Maxim, ..." autocomplete="off"/>
-      <button class="btn btn-add" onclick="addNames()">Add names</button>
-      <button class="btn btn-pick" onclick="pickName()">Pick a name</button>
-      <button class="btn btn-newRound" onclick="newRound()">New round</button>
+      <input
+        type="text"
+        id="names"
+        placeholder="John, Marie, Maxim, ..."
+        autocomplete="off"
+      />
+      <div class="buttons">
+        <button class="btn btn-add" onclick="addNames()">Add names</button>
+        <button class="btn btn-del" onclick="delNames()">Delete names</button>
+        <button class="btn btn-pick" onclick="pickName()">Pick a name</button>
+        <button class="btn btn-newRound" onclick="newRound()">New round</button>
+      </div>
       <div id="names_container"></div>
       <div class="number_names">
         <span class="number"></span>
-        <span class="name_word">names</span>
+        <span class="name_word"></span>
         available
       </div>
       <h3>By Salem Helwani 2023</h3>
