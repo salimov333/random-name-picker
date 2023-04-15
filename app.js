@@ -8,6 +8,7 @@ const buttonAdd = document.querySelector(".btn-add");
 const buttonDel = document.querySelector(".btn-del");
 const spanNumber = document.querySelector(".number");
 const spanNameWord = document.querySelector(".name_word");
+const displayNamesContainer = document.querySelector(".display-names-container");
 
 
 //Immediately invoked function checks first of all if the `names Array` is in local storage already.
@@ -26,21 +27,30 @@ const spanNameWord = document.querySelector(".name_word");
     buttonAdd.disabled = true;
     buttonDel.disabled = true;
 
+    //if the names array is empty
+    if (namesArr.length === 0) {
+        buttonPick.disabled = true;
+    } else {
+        buttonPick.disabled = false;
+    }
+
+
     inputNamesEl.addEventListener("input", () => {
-        if (inputNamesEl.value.length === 0) {
-            buttonAdd.disabled = true;
+        if (namesArr.length === 0) {
+            buttonPick.disabled = true;
+            buttonAdd.disabled = false;
             buttonDel.disabled = true;
         } else {
+            buttonPick.disabled = false;
             buttonAdd.disabled = false;
             buttonDel.disabled = false;
         }
     });
 
-    spanNameWord.innerHTML = namesArr.length < 2 ? "name" : "names";
-
     //Create and fill the names list based on the names array.
     createNamesList(namesArr);
 
+    setNameWord();
 })();
 
 //Basic App Function to pick and show a name. It is triggered when the button `Pick a name` i clicked.
@@ -65,13 +75,13 @@ function pickName() {
     namesArr = namesArr.filter(name => name !== pickedName);
     console.log("namesArr:", namesArr);
 
-    spanNameWord.innerHTML = namesArr.length < 2 ? "name" : "names";
-
     if (namesArr.length === 0) {
         createNamesList(namesArr);
         namesContainer.classList.add("empty");
         namesContainer.innerHTML = "All names have been picked!";
+        buttonPick.disabled = true;
     } else {
+        buttonPick.disabled = false;
         createNamesList(namesArr);
         const namesList = document.querySelector(".names_list");
         namesList.classList.add("accelerate");
@@ -94,12 +104,15 @@ function pickName() {
             // console.log("namesContainer;", namesContainer);
         }, 6000);
     };
+    setNameWord();
 };
 
 //App Function to start a new picking round. It is triggered when the button `New rund` i clicked.
 function newRound() {
     //Disable new round button.
     buttonNewRound.disabled = true;
+
+    buttonPick.disabled = false;
 
     namesContainer.classList.remove("empty");
 
@@ -130,9 +143,8 @@ function newRound() {
     localStorage.setItem("namesArrStorage", JSON.stringify(DefaultNamesArr));
     namesArr = JSON.parse(localStorage.getItem("namesArrStorage"));
 
-    spanNameWord.innerHTML = namesArr.length < 2 ? "name" : "names";
-    
     createNamesList(namesArr);
+    setNameWord();
     console.log("namesArr", namesArr);
 };
 
@@ -140,6 +152,8 @@ function newRound() {
 function addNames() {
     //Enable new round button.
     buttonNewRound.disabled = false;
+    buttonDel.disabled = false;
+    buttonPick.disabled = false;
 
     namesContainer.classList.remove("empty");
 
@@ -151,10 +165,13 @@ function addNames() {
     const validNames = validInputName.filter(name => name.trim() !== '');
     console.log("To add names:", validNames);
 
+
     //Alert no input names and empty names array!
     if (validNames.length === 0 && namesArr.length === 0) {
         namesContainer.classList.add("empty");
         alert("Please enter some names or start a new round!");
+        buttonPick.disabled = true;
+        buttonDel.disabled = true;
         return;
     };
     //Alert no input names
@@ -170,15 +187,16 @@ function addNames() {
     // Save the names array into localStorage.
     localStorage.setItem("namesArrStorage", JSON.stringify(namesArr));
 
-    spanNameWord.innerHTML = namesArr.length < 2 ? "name" : "names";
-
     createNamesList(namesArr);
+    setNameWord();
 };
 
 //App Function to delete names based on input names. It is triggered when the button `Delete names` is clicked.
 function delNames() {
     //Enable new round button.
     buttonNewRound.disabled = false;
+
+    buttonPick.disabled = false;
 
     namesContainer.classList.remove("empty");
 
@@ -194,6 +212,8 @@ function delNames() {
     if (validNames.length === 0 && namesArr.length === 0) {
         namesContainer.classList.add("empty");
         alert("Please enter some names or start a new round!");
+        buttonPick.disabled = true;
+        buttonDel.disabled = true;
         return;
     };
 
@@ -212,14 +232,15 @@ function delNames() {
     // Save the names array into localStorage.
     localStorage.setItem("namesArrStorage", JSON.stringify(namesArr));
 
-    spanNameWord.innerHTML = namesArr.length < 2 ? "name" : "names";
-
     createNamesList(namesArr);
+    setNameWord();
 };
 
 //Auxiliary Functions.
 
-//Function to create and fill the names list based on a given names array.
+//Function to 
+//1. create and fill the names list into the namesContainer based on a given names array.
+//2. run the function createDisplayNamesList()
 function createNamesList(arr) {
     let namesList = document.createElement("div");
     namesContainer.innerHTML = "";
@@ -248,6 +269,8 @@ function createNamesList(arr) {
     // Save the names array into localStorage.
     localStorage.setItem("namesArrStorage", JSON.stringify(namesArr));
     // console.log(localStorage.getItem("namesArrStorage"));
+
+    createDisplayNamesList(namesArr);
 }
 
 //Function to generate an integer between `min` and `max` numbers.
@@ -264,3 +287,24 @@ function showNumberOfNames(arr) {
 function randomHsl() {
     return 'hsla(' + (Math.random() * 360) + ', 90%, 60%, 1)';
 };
+
+//Function to create and fill the display names list into the displayNames based on a given names array.
+function createDisplayNamesList(arr) {
+    console.log("Display names list is created");
+    const displayNamesList = document.createElement("div");
+    displayNamesList.classList.add("display-names-list");
+
+    arr.forEach(name => {
+        const displayName = document.createElement("div");
+        displayName.classList.add("display-name");
+        displayName.innerHTML = name;
+        displayNamesList.appendChild(displayName);
+    });
+    displayNamesContainer.innerHTML = "";
+    displayNamesContainer.appendChild(displayNamesList);
+};
+
+//Function to set the name word by `name` or `names`
+function setNameWord() {
+    spanNameWord.innerHTML = namesArr.length < 2 ? "name" : "names";
+}
