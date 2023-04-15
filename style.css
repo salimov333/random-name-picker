@@ -223,6 +223,7 @@ button.btn-del {
     letter-spacing: 2px;
     text-shadow: #7c5683 3px 3px 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    animation: tremble 0.1s ease-in-out 1;
 }
 
 h3 {
@@ -255,11 +256,15 @@ h3 {
 }
 
 @keyframes bounceIn {
-    from {
+    0% {
         transform: scale(0);
     }
 
-    to {
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
         transform: scale(1);
     }
 }
@@ -280,14 +285,32 @@ h3 {
     }
 
     100% {
-        transform: scale(0) rotate(3turn);
+        transform: scale(0) rotate(4turn);
     }
 }
 
 @keyframes pick {
 
     to {
-        transform: scale(0) translateX(800%) rotate(90deg);
+        transform: scale(0) translate(-100%) rotate(90deg);
+    }
+}
+
+@keyframes tremble {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(-3deg);
+    }
+
+    75% {
+        transform: rotate(3deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
     }
 }
 

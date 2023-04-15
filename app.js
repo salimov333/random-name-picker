@@ -1,6 +1,5 @@
 //Declaration and Selection.
 let namesArr = [];
-let validNamesAdd = [];
 const inputNamesEl = document.getElementById("names");
 const namesContainer = document.getElementById("names_container");
 const buttonPick = document.querySelector(".btn-pick");
@@ -91,15 +90,14 @@ function pickName() {
         buttonAdd.disabled = true;
         buttonDel.disabled = true;
         buttonNewRound.disabled = false;
-
-        //Animation
-        const displayNamesAll = document.querySelectorAll(".display-name");
-        for (displayName of displayNamesAll) {
-            if (displayName.innerText === pickedName) {
-                displayName.style.animation = "pick 2s forwards";
-            }
-        };
         setTimeout(() => {
+            //Animation
+            const displayNamesAll = document.querySelectorAll(".display-name");
+            for (displayName of displayNamesAll) {
+                if (displayName.innerText === pickedName) {
+                    displayName.style.animation = "pick 4s 2s";
+                }
+            };
             namesContainer.classList.add("picked_name");
             namesContainer.innerHTML = pickedName;
             // showNumberOfNames(namesArr);
@@ -174,7 +172,6 @@ function addNames() {
     // console.log("validInputName", validInputName);
     inputNamesEl.value = "";
     const validNames = validInputName.filter(name => name.trim() !== '');
-    validNamesAdd = validNames;
     // console.log("To add names:", validNames);
 
 
@@ -200,8 +197,14 @@ function addNames() {
     localStorage.setItem("namesArrStorage", JSON.stringify(namesArr));
 
     createNamesList(namesArr);
-    validNamesAdd = [];
     setNameWord();
+    //Animation
+    const displayNamesAll = document.querySelectorAll(".display-name");
+    for (displayName of displayNamesAll) {
+        if (validNames.includes(displayName.innerText)) {
+            displayName.style.animation = "bounceIn 3s ease-out";
+        }
+    };
 };
 
 //App Function to delete names based on input names. It is triggered when the button `Delete names` is clicked.
@@ -249,7 +252,7 @@ function delNames() {
     const displayNamesAll = document.querySelectorAll(".display-name");
     for (displayName of displayNamesAll) {
         if (validNames.includes(displayName.innerText)) {
-            displayName.style.animation = "delete 2s";
+            displayName.style.animation = "delete 3s 0.2s";
         }
     };
     setTimeout(() => {
@@ -327,12 +330,6 @@ function createDisplayNamesList(arr) {
         displayName.classList.add("display-name", `display-name-${index}`);
         displayName.style.animationDelay = `calc(0.1s * ${index + 1})`;
         displayName.innerHTML = name;
-
-        if (validNamesAdd.length !== 0 && validNamesAdd.includes(name)) {
-            // console.log(name);
-            displayName.style.animation = "bounceIn 2s";
-        };
-
         displayNamesList.appendChild(displayName);
     });
     displayNamesContainer.innerHTML = "";
