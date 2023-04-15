@@ -274,6 +274,23 @@ h3 {
     }
 }
 
+@keyframes delete {
+    0% {
+        transform: scale(0.8) rotate(0);
+    }
+
+    100% {
+        transform: scale(0) rotate(3turn);
+    }
+}
+
+@keyframes pick {
+
+    to {
+        transform: scale(0) translateX(800%) rotate(90deg);
+    }
+}
+
 @media screen and (min-width:376px) {
     .display-names-list {
         max-height: 350px;

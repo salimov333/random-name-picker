@@ -1,5 +1,6 @@
 //Declaration and Selection.
 let namesArr = [];
+let validNamesAdd = [];
 const inputNamesEl = document.getElementById("names");
 const namesContainer = document.getElementById("names_container");
 const buttonPick = document.querySelector(".btn-pick");
@@ -14,10 +15,10 @@ const displayNamesContainer = document.querySelector(".display-names-container")
 //Immediately invoked function checks first of all if the `names Array` is in local storage already.
 (function () {
     if (localStorage.namesArrStorage) {
-        console.log("namesArrStorage:", localStorage.namesArrStorage);
+        // console.log("namesArrStorage:", localStorage.namesArrStorage);
         namesArr = JSON.parse(localStorage.getItem("namesArrStorage"));
     } else {
-        console.log("`namesArrStorage` not found in local storage");
+        // console.log("`namesArrStorage` not found in local storage");
         newRound();
     }
     //Enable new round button.
@@ -68,26 +69,36 @@ function pickName() {
 
     //Pick a random name from names array.
     const pickedName = namesArr[randomIndex];
-    console.log(randomIndex, pickedName);
 
+    // console.log(randomIndex, pickedName);
+
+    // console.log(namesArr.length);
 
     //Update the `namesArr` array.
     namesArr = namesArr.filter(name => name !== pickedName);
-    console.log("namesArr:", namesArr);
+    // console.log("namesArr:", namesArr);
 
     if (namesArr.length === 0) {
         createNamesList(namesArr);
         namesContainer.classList.add("empty");
         namesContainer.innerHTML = "All names have been picked!";
         buttonPick.disabled = true;
+        buttonNewRound.disabled = false;
     } else {
-        buttonPick.disabled = false;
-        createNamesList(namesArr);
         const namesList = document.querySelector(".names_list");
         namesList.classList.add("accelerate");
         buttonPick.disabled = true;
         buttonAdd.disabled = true;
         buttonDel.disabled = true;
+        buttonNewRound.disabled = false;
+
+        //Animation
+        const displayNamesAll = document.querySelectorAll(".display-name");
+        for (displayName of displayNamesAll) {
+            if (displayName.innerText === pickedName) {
+                displayName.style.animation = "pick 2s forwards";
+            }
+        };
         setTimeout(() => {
             namesContainer.classList.add("picked_name");
             namesContainer.innerHTML = pickedName;
@@ -95,8 +106,8 @@ function pickName() {
         }, randomTimeOut);
         setTimeout(() => {
             buttonPick.disabled = false;
-            buttonAdd.disabled = false;
-            buttonDel.disabled = false;
+            /* buttonAdd.disabled = false;
+            buttonDel.disabled = false; */
             namesList.classList.remove("accelerate");
             namesContainer.classList.remove("picked_name");
             createNamesList(namesArr);
@@ -145,7 +156,7 @@ function newRound() {
 
     createNamesList(namesArr);
     setNameWord();
-    console.log("namesArr", namesArr);
+    // console.log("namesArr", namesArr);
 };
 
 //App Function to add new names based on input names. It is triggered when the button `Add names` is clicked.
@@ -160,10 +171,11 @@ function addNames() {
     //Get input names and remove the spaces .
     const inputNames = inputNamesEl.value.split(",");
     const validInputName = inputNames.map(name => name.trim());
-    console.log("validInputName", validInputName);
+    // console.log("validInputName", validInputName);
     inputNamesEl.value = "";
     const validNames = validInputName.filter(name => name.trim() !== '');
-    console.log("To add names:", validNames);
+    validNamesAdd = validNames;
+    // console.log("To add names:", validNames);
 
 
     //Alert no input names and empty names array!
@@ -182,12 +194,13 @@ function addNames() {
 
     //Remove repeated names and update names array.
     namesArr = Array.from(new Set(validNames.concat(namesArr)));
-    console.log("namesArr after add", namesArr);
+    // console.log("namesArr after add", namesArr);
 
     // Save the names array into localStorage.
     localStorage.setItem("namesArrStorage", JSON.stringify(namesArr));
 
     createNamesList(namesArr);
+    validNamesAdd = [];
     setNameWord();
 };
 
@@ -203,10 +216,10 @@ function delNames() {
     //Get input names and remove the spaces .
     const inputNames = inputNamesEl.value.split(",");
     const validInputName = inputNames.map(name => name.trim());
-    console.log("validInputName", validInputName);
+    // console.log("validInputName", validInputName);
     inputNamesEl.value = "";
     const validNames = validInputName.filter(name => name.trim() !== '');
-    console.log("To delete names:", validNames);
+    // console.log("To delete names:", validNames);
 
     //Alert no input names and empty names array!
     if (validNames.length === 0 && namesArr.length === 0) {
@@ -227,13 +240,23 @@ function delNames() {
     const uniqueNames = namesArr.filter(name => !validNames.includes(name));
     namesArr = uniqueNames;
     console.log("uniqueNames", uniqueNames);
-    console.log("namesArr after delete", namesArr);
+    // console.log("namesArr after delete", namesArr);
 
     // Save the names array into localStorage.
     localStorage.setItem("namesArrStorage", JSON.stringify(namesArr));
 
-    createNamesList(namesArr);
-    setNameWord();
+    //Animation
+    const displayNamesAll = document.querySelectorAll(".display-name");
+    for (displayName of displayNamesAll) {
+        if (validNames.includes(displayName.innerText)) {
+            displayName.style.animation = "delete 2s";
+        }
+    };
+    setTimeout(() => {
+        createNamesList(namesArr);
+        setNameWord();
+    }, 2000);
+
 };
 
 //Auxiliary Functions.
@@ -259,7 +282,7 @@ function createNamesList(arr) {
     };
 
     const namesArrLength = namesArr.length;
-    console.log("namesArrLength:", namesArrLength);
+    // console.log("namesArrLength:", namesArrLength);
     namesList.setAttribute("style", `--length:${namesArrLength}`);
     // console.log("namesContainer:", namesContainer);
 
@@ -270,7 +293,7 @@ function createNamesList(arr) {
     localStorage.setItem("namesArrStorage", JSON.stringify(namesArr));
     // console.log(localStorage.getItem("namesArrStorage"));
 
-    createDisplayNamesList(namesArr);
+    createDisplayNamesList(arr);
 }
 
 //Function to generate an integer between `min` and `max` numbers.
@@ -288,23 +311,30 @@ function randomHsl() {
     return 'hsla(' + (Math.random() * 360) + ', 90%, 60%, 1)';
 };
 
-//Function to create and fill the display names list into the displayNames based on a given names array.
+//Function to set the name word by `name` or `names`
+function setNameWord() {
+    spanNameWord.innerHTML = namesArr.length < 2 ? "name" : "names";
+};
+
+//Function to create and fill the display names list into the displayNamesContainer based on a given names array.
 function createDisplayNamesList(arr) {
-    console.log("Display names list is created");
+    // console.log("Display names list is created");
     const displayNamesList = document.createElement("div");
     displayNamesList.classList.add("display-names-list");
 
-    arr.forEach(name => {
+    arr.forEach((name, index) => {
         const displayName = document.createElement("div");
-        displayName.classList.add("display-name");
+        displayName.classList.add("display-name", `display-name-${index}`);
+        displayName.style.animationDelay = `calc(0.1s * ${index + 1})`;
         displayName.innerHTML = name;
+
+        if (validNamesAdd.length !== 0 && validNamesAdd.includes(name)) {
+            // console.log(name);
+            displayName.style.animation = "bounceIn 2s";
+        };
+
         displayNamesList.appendChild(displayName);
     });
     displayNamesContainer.innerHTML = "";
     displayNamesContainer.appendChild(displayNamesList);
 };
-
-//Function to set the name word by `name` or `names`
-function setNameWord() {
-    spanNameWord.innerHTML = namesArr.length < 2 ? "name" : "names";
-}
